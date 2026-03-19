@@ -238,3 +238,14 @@ code {
     @apply font-sans;
   }
 }
+
+a.active {
+  border: 2px solid var(--foreground);
+  border-radius: 50%;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
