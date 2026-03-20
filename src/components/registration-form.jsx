@@ -7,10 +7,10 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 
 export function RegistrationForm({ className, ...props }) {
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(formData) {
+    // e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    // const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData);
     console.log(data);
   }
@@ -23,7 +23,7 @@ export function RegistrationForm({ className, ...props }) {
           {/* <CardDescription>Enter your email below to login to your account</CardDescription> */}
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form action={handleSubmit}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="name">Name</FieldLabel>
