@@ -1,18 +1,24 @@
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import { toast } from 'sonner';
 
+import { registration } from '@/api/auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-
 export function RegistrationForm({ className, ...props }) {
-  function handleSubmit(formData) {
-    // e.preventDefault();
+  const navigate = useNavigate();
+  async function handleSubmit(formData) {
+    try {
+      const data = Object.fromEntries(formData);
 
-    // const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData);
-    console.log(data);
+      await registration(data);
+      toast.success('User created!!!');
+      navigate('/home');
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
