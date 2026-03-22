@@ -1,19 +1,28 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 
-import { registration } from '@/api/auth';
+// import { registration } from '@/api/auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { registrationThunk } from '@/store/operations';
+import { selectAuthLoading } from '@/store/selectors';
+
 export function RegistrationForm({ className, ...props }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectAuthLoading);
+  // const isAuth = useSelector(selectAuth);
+
   async function handleSubmit(formData) {
     try {
       const data = Object.fromEntries(formData);
+      await dispatch(registrationThunk(data)).unwrap();
+      // await registration(data);
 
-      await registration(data);
       toast.success('User created!!!');
       navigate('/home');
     } catch (error) {
@@ -53,7 +62,9 @@ export function RegistrationForm({ className, ...props }) {
                 <Input id="password" name="password" type="password" required />
               </Field>
               <Field>
-                <Button type="submit">Sign Up</Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? 'Signing up...' : 'Sign Up'}
+                </Button>
                 {/* <Button variant="outline" type="button">
                   Login with Google
                 </Button> */}
