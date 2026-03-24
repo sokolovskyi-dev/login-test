@@ -8,8 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { registrationThunk } from '@/store/operations';
-import { selectAuthLoading } from '@/store/selectors';
+import { registrationThunk } from '@/redux/operations';
+import { selectAuthLoading } from '@/redux/selectors';
 
 export function RegistrationForm({ className, ...props }) {
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Toaster } from '@/components/ui/sonner';
 
 import { router } from './app/router.jsx';
-import { persistor, store } from './store/store.js';
+import { persistor, store } from './redux/store.js';
 
 import './styles/index.css';
 
