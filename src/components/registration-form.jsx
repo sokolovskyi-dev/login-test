@@ -1,5 +1,6 @@
 // import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 
 // import { toast } from 'sonner';
 import { useSignUpMutation } from '@/api/authApi';
@@ -11,10 +12,21 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 // import { registrationThunk } from '@/redux/operations';
 // import { selectAuthLoading } from '@/redux/selectors';
+function getErrorMessage(error) {
+  if (error?.data?.code === 11000) {
+    return `User with email ${error.data.keyValue.email} already exists`;
+  }
+
+  if (error?.data?.message) {
+    return error.data.message;
+  }
+
+  return 'Sign up failed';
+}
 
 export function RegistrationForm({ className, ...props }) {
-  // const navigate = useNavigate();
-  const [signUp, { data, error, isLoading }] = useSignUpMutation();
+  const navigate = useNavigate();
+  const [signUp, { error, isLoading }] = useSignUpMutation();
   // const dispatch = useDispatch();
   // const isLoading = useSelector(selectAuthLoading);
   // const isAuth = useSelector(selectAuth);
@@ -24,13 +36,12 @@ export function RegistrationForm({ className, ...props }) {
       const payload = Object.fromEntries(formData);
       const result = await signUp(payload).unwrap();
       console.log(result);
-      // await dispatch(registrationThunk(data)).unwrap();
-      // await registration(data);
 
-      // toast.success('User created!!!');
-      // navigate('/home');
+      toast.success('✅  User created!!!');
+      navigate('/home');
     } catch (error) {
-      console.error(error.message);
+      console.error('Sign up failed:', error);
+      toast.error('🔥 Sign up failed!!!');
     }
   }
 
@@ -63,8 +74,9 @@ export function RegistrationForm({ className, ...props }) {
                     Forgot your password?
                   </a> */}
                 </div>
-                <Input id="password" name="password" type="password" required />
+                <Input id="password" name="password" type="password" minLength={7} required />
               </Field>
+              {error && <p className="text-sm text-red-500">{getErrorMessage(error)}</p>}
               <Field>
                 <Button type="submit" disabled={isLoading}>
                   {isLoading ? 'Signing up...' : 'Sign Up'}

@@ -3,11 +3,11 @@ import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 
 
 import { authApi } from '@/api/authApi';
 
-// import { authReducer } from './auth/authSlice';
+import { authReducer } from './auth/authSlice';
 
 export const store = configureStore({
   reducer: {
-    // auth: authReducer,
+    auth: authReducer,
     [authApi.reducerPath]: authApi.reducer,
   },
   //persist:
