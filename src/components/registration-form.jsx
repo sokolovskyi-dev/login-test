@@ -1,32 +1,36 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router';
-import { toast } from 'sonner';
+// import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router';
 
+// import { toast } from 'sonner';
+import { useSignUpMutation } from '@/api/authApi';
 // import { registration } from '@/api/auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { registrationThunk } from '@/redux/operations';
-import { selectAuthLoading } from '@/redux/selectors';
+// import { registrationThunk } from '@/redux/operations';
+// import { selectAuthLoading } from '@/redux/selectors';
 
 export function RegistrationForm({ className, ...props }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isLoading = useSelector(selectAuthLoading);
+  // const navigate = useNavigate();
+  const [signUp, { data, error, isLoading }] = useSignUpMutation();
+  // const dispatch = useDispatch();
+  // const isLoading = useSelector(selectAuthLoading);
   // const isAuth = useSelector(selectAuth);
 
   async function handleSubmit(formData) {
     try {
-      const data = Object.fromEntries(formData);
-      await dispatch(registrationThunk(data)).unwrap();
+      const payload = Object.fromEntries(formData);
+      const result = await signUp(payload).unwrap();
+      console.log(result);
+      // await dispatch(registrationThunk(data)).unwrap();
       // await registration(data);
 
-      toast.success('User created!!!');
-      navigate('/home');
+      // toast.success('User created!!!');
+      // navigate('/home');
     } catch (error) {
-      console.log(error);
+      console.error(error.message);
     }
   }
 
