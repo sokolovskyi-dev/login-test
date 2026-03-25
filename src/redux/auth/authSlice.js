@@ -5,26 +5,28 @@ import storage from 'redux-persist/lib/storage';
 // import { registrationThunk } from '../operations';
 
 const initialState = {
-  token: '',
-  profile: null,
-  isLoading: false,
-  error: null,
+  user: {
+    name: null,
+    email: null,
+  },
+  token: null,
+  isLoggedIn: false,
+  isRefreshing: false,
 };
-
 // function handleRegister(state, { payload }) {
 //   state.isLoading = false;
 //   state.token = payload.token;
 //   state.profile = payload.user;
 // }
 
-export const userSlice = createSlice({
+export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     logOut(state) {
       state.token = '';
-      state.profile = null;
-      state.error = null;
+      state.user = null;
+      state.isLoggedIn = false;
     },
   },
   // extraReducers: (builder) => {
@@ -47,4 +49,4 @@ const persistConfig = {
   whitelist: ['token'],
 };
 
-export const authReducer = persistReducer(persistConfig, userSlice.reducer);
+export const authReducer = persistReducer(persistConfig, authSlice.reducer);
