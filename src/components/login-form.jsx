@@ -1,12 +1,33 @@
-import { Link } from 'react-router';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router';
 
+import { useSignInMutation } from '@/api/authApi';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 
 export function LoginForm({ className, ...props }) {
+  const navigate = useNavigate();
+  const [signUp, { error, isLoading }] = useSignInMutation();
+
+  async function handleSubmit(formData) {
+    try {
+      const payload = Object.fromEntries(formData);
+      console.log(payload);
+      const result = await signUp(payload).unwrap();
+      console.log(result);
+
+      toast.success('✅ Login successful!!!');
+      navigate('/home');
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error('🔥 Login error!!!');
+    }
+  }
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
@@ -15,11 +36,18 @@ export function LoginForm({ className, ...props }) {
           <CardDescription>Enter your email below to login to your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={handleSubmit}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input id="email" type="email" placeholder="m@example.com" required />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  autoComplete="username"
+                  required
+                />
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -31,10 +59,20 @@ export function LoginForm({ className, ...props }) {
                     Forgot your password?
                   </a> */}
                 </div>
-                <Input id="password" type="password" required />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  autoComplete="current-password"
+                />
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                {error && <p className="text-sm text-red-500">🔥 Login error</p>}
+                <Spinner />
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? 'Login...' : 'Login'}
+                </Button>
                 {/* <Button variant="outline" type="button">
                   Login with Google
                 </Button> */}

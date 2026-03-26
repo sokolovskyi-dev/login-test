@@ -62,7 +62,14 @@ export function RegistrationForm({ className, ...props }) {
 
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
-                <Input id="email" name="email" type="email" placeholder="m@example.com" required />
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="m@example.com"
+                  autoComplete="email"
+                  required
+                />
               </Field>
               <Field>
                 <div className="flex items-center">
@@ -74,7 +81,14 @@ export function RegistrationForm({ className, ...props }) {
                     Forgot your password?
                   </a> */}
                 </div>
-                <Input id="password" name="password" type="password" minLength={7} required />
+                <Input
+                  id="password"
+                  name="password"
+                  type="password"
+                  minLength={7}
+                  autoComplete="new-password"
+                  required
+                />
               </Field>
               {error && <p className="text-sm text-red-500">{getErrorMessage(error)}</p>}
               <Field>
