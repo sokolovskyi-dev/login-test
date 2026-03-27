@@ -20,9 +20,14 @@ export function LoginForm({ className, ...props }) {
     try {
       const payload = Object.fromEntries(formData);
       console.log(payload);
-      const result = await signIn(payload).unwrap();
-      console.log(result);
-      dispatch(setCredentials(result));
+      const { token, user } = await signIn(payload).unwrap();
+
+      dispatch(
+        setCredentials({
+          token,
+          user,
+        })
+      );
 
       toast.success('✅ Login successful!!!');
       navigate('/home');
