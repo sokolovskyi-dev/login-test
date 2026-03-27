@@ -69,6 +69,7 @@ export function RegistrationForm({ className, ...props }) {
                   placeholder="m@example.com"
                   autoComplete="email"
                   required
+                  disabled={isLoading}
                 />
               </Field>
               <Field>
@@ -88,6 +89,7 @@ export function RegistrationForm({ className, ...props }) {
                   minLength={7}
                   autoComplete="new-password"
                   required
+                  disabled={isLoading}
                 />
               </Field>
               {error && <p className="text-sm text-red-500">{getErrorMessage(error)}</p>}

@@ -1,4 +1,5 @@
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router';
 
 import { useSignInMutation } from '@/api/authApi';
@@ -8,17 +9,20 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui
 import { Input } from '@/components/ui/input';
 import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
+import { setCredentials } from '@/redux/auth/authSlice';
 
 export function LoginForm({ className, ...props }) {
   const navigate = useNavigate();
-  const [signUp, { error, isLoading }] = useSignInMutation();
+  const dispatch = useDispatch();
+  const [signIn, { error, isLoading }] = useSignInMutation();
 
   async function handleSubmit(formData) {
     try {
       const payload = Object.fromEntries(formData);
       console.log(payload);
-      const result = await signUp(payload).unwrap();
+      const result = await signIn(payload).unwrap();
       console.log(result);
+      dispatch(setCredentials(result));
 
       toast.success('✅ Login successful!!!');
       navigate('/home');
@@ -47,6 +51,7 @@ export function LoginForm({ className, ...props }) {
                   placeholder="m@example.com"
                   autoComplete="username"
                   required
+                  disabled={isLoading}
                 />
               </Field>
               <Field>
@@ -65,12 +70,15 @@ export function LoginForm({ className, ...props }) {
                   type="password"
                   required
                   autoComplete="current-password"
+                  disabled={isLoading}
                 />
               </Field>
               <Field>
                 {error && <p className="text-sm text-red-500">🔥 Login error</p>}
-                <Spinner />
+
                 <Button type="submit" disabled={isLoading}>
+                  {isLoading ? <Spinner /> : null}
+
                   {isLoading ? 'Login...' : 'Login'}
                 </Button>
                 {/* <Button variant="outline" type="button">

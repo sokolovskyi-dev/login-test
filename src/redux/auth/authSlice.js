@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-// import { registrationThunk } from '../operations';
-
 const initialState = {
   user: {
     name: null,
@@ -13,34 +11,26 @@ const initialState = {
   isLoggedIn: false,
   isRefreshing: false,
 };
-// function handleRegister(state, { payload }) {
-//   state.isLoading = false;
-//   state.token = payload.token;
-//   state.profile = payload.user;
-// }
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setCredentials(state, { payload }) {
+      state.token = payload.token;
+      state.user = payload.user;
+      state.isLoggedIn = true;
+    },
     logOut(state) {
-      state.token = '';
-      state.user = null;
+      state.token = null;
+      state.user = {
+        name: null,
+        email: null,
+      };
       state.isLoggedIn = false;
+      state.isRefreshing = false;
     },
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(registrationThunk.pending, (state) => {
-  //       state.isLoading = true;
-  //       state.error = null;
-  //     })
-  //     .addCase(registrationThunk.fulfilled, handleRegister)
-  //     .addCase(registrationThunk.rejected, (state, { payload, error }) => {
-  //       state.isLoading = false;
-  //       state.error = payload || error.message;
-  //     });
-  // },
 });
 
 const persistConfig = {
@@ -50,3 +40,5 @@ const persistConfig = {
 };
 
 export const authReducer = persistReducer(persistConfig, authSlice.reducer);
+
+export const { setCredentials, logOut } = authSlice.actions;
