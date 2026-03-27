@@ -29,7 +29,7 @@ export function LoginForm({ className, ...props }) {
         })
       );
 
-      toast.success('✅ Login successful!!!');
+      toast.success(' Login successful!!!');
       navigate('/home');
     } catch (error) {
       console.error('Login error:', error);
