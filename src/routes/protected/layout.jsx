@@ -1,15 +1,16 @@
+import { useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
+import { useRefreshUserQuery } from '@/api/authApi';
 import { AuthNav } from '@/components/AuthNav/AuthNav';
 import FloatingDockDemo from '@/components/floating-dock-demo';
 import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 import { Button, LoginButton } from '@/components/ui/button';
 import { UserMenu } from '@/components/UserMenu/UserMenu';
-import { selectIsLoggedIn, selectIsRefreshing, selectToken } from '@/redux/auth/selectors';
-import { useRefreshUserQuery } from '@/api/authApi';
-import { useEffect } from 'react';
 import { refreshUser } from '@/redux/auth/authSlice';
+import { selectIsLoggedIn, selectIsRefreshing, selectToken } from '@/redux/auth/selectors';
 
 export function Component() {
   const dispatch = useDispatch();

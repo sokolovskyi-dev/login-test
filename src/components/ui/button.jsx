@@ -64,4 +64,4 @@ function LoginButton() {
   );
 }
 
-export { Button, LoginButton, buttonVariants };
+export { Button, buttonVariants, LoginButton };
