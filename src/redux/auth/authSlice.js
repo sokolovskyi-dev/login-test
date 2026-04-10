@@ -9,7 +9,6 @@ const initialState = {
   },
   token: null,
   isLoggedIn: false,
-  isRefreshing: false,
 };
 
 export const authSlice = createSlice({
@@ -28,12 +27,10 @@ export const authSlice = createSlice({
         email: null,
       };
       state.isLoggedIn = false;
-      state.isRefreshing = false;
     },
     refreshUser(state, { payload }) {
       state.user = payload;
       state.isLoggedIn = true;
-      state.isRefreshing = false;
     },
   },
 });
