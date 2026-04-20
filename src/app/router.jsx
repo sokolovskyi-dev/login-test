@@ -27,6 +27,10 @@ export const router = createBrowserRouter([
                 path: 'home',
                 lazy: () => import('../routes/protected/home'),
               },
+              {
+                path: 'contacts',
+                lazy: () => import('../routes/protected/contacts'),
+              },
             ],
           },
         ],

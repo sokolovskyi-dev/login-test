@@ -13,3 +13,4 @@ export function Component() {
     </div>
   );
 }
+Component.displayName = 'HomePage';
