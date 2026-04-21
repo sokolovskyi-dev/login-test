@@ -19,7 +19,7 @@ export function LoginForm({ className, ...props }) {
   async function handleSubmit(formData) {
     try {
       const payload = Object.fromEntries(formData);
-      console.log(payload);
+
       const { token, user } = await signIn(payload).unwrap();
 
       dispatch(

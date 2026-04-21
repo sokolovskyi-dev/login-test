@@ -64,11 +64,11 @@ export default function Phonebook() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8">
+    <div className="min-h-screen rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 shadow-2xl md:p-8">
       <div className="mx-auto max-w-2xl space-y-6">
         {/* Header */}
         <div className="text-center">
-          <h1 className="mb-2 text-4xl font-bold text-white">Phonebook</h1>
+          <h1 className="mb-2 text-4xl font-bold text-white!">Phonebook</h1>
           <p className="text-slate-400">Manage your contacts easily</p>
         </div>
 
